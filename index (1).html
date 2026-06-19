@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light" data-lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LUUMA – Luxury Dining Beside The Nile | Zamalek, Cairo</title>
+<meta name="description" content="LUUMA is Cairo's premier riverside dining destination in Zamalek, offering breathtaking Nile views, handcrafted dishes, and an unforgettable luxury experience." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   LUUMA — Design System
+   ============================================================ */
+:root {
+  --ivory:   #F4EEE5;
+  --beige:   #DCCBB6;
+  --stone:   #C8B9A6;
+  --walnut:  #6A4B37;
+  --wood:    #8A5C3D;
+  --gold:    #C9A15B;
+  --gold-light: #DDB96E;
+  --charcoal:#1E1E1E;
+  --white:   #FFFFFF;
+
+  --bg:          #F4EEE5;
+  --bg-alt:      #EDE5D8;
+  --bg-card:     rgba(255,255,255,0.72);
+  --text-primary:#1E1E1E;
+  --text-secondary:#6A4B37;
+  --text-muted:  #8A7060;
+  --border:      rgba(201,161,91,0.22);
+  --shadow:      0 8px 40px rgba(106,75,55,0.10);
+  --shadow-lg:   0 24px 80px rgba(106,75,55,0.16);
+
+  --header-h: 80px;
+  --r-card: 16px;
+  --r-pill: 999px;
+  --transition: 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+
+[data-theme="dark"] {
+  --bg:          #141210;
+  --bg-alt:      #1C1915;
+  --bg-card:     rgba(28,25,21,0.80);
+  --text-primary:#F4EEE5;
+  --text-secondary:#C9A15B;
+  --text-muted:  #A08070;
+  --border:      rgba(201,161,91,0.18);
+  --shadow:      0 8px 40px rgba(0,0,0,0.36);
+  --shadow-lg:   0 24px 80px rgba(0,0,0,0.50);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family:'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+  line-height:1.6;
+}
+[data-lang="ar"] body,
+[data-lang="ar"] * { font-family:'Cairo', sans-serif; }
+[data-lang="ar"] { direction: rtl; }
+img { display:block; max-width:100%; }
+a { text-decoration:none; color:inherit; }
+button { cursor:pointer; border:none; background:none; font-family:inherit; }
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.display {
+  font-family:'Playfair Display', serif;
+  font-weight:500;
+  line-height:1.12;
+  letter-spacing:-0.01em;
+}
+[data-lang="ar"] .display { font-family:'Cairo', sans-serif; font-weight:700; line-height:1.3; }
+
+.eyebrow {
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+#loader {
+  position:fixed; inset:0; z-index:9999;
+  background:var(--charcoal);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:20px;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+#loader.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+.loader-logo {
+  font-family:'Playfair Display', serif;
+  font-size:3rem;
+  font-weight:500;
+  color:var(--gold);
+  letter-spacing:0.2em;
+  animation: loader-pulse 1.6s ease-in-out infinite;
+}
+.loader-bar {
+  width:120px; height:2px;
+  background:rgba(201,161,91,0.2);
+  border-radius:999px;
+  overflow:hidden;
+}
+.loader-bar-fill {
+  height:100%; width:0;
+  background:var(--gold);
+  border-radius:999px;
+  animation: loader-fill 1.8s ease forwards;
+}
+@keyframes loader-pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+@keyframes loader-fill { to { width:100% } }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+#header {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  height:var(--header-h);
+  display:flex; align-items:center;
+  padding:0 clamp(20px,5vw,80px);
+  transition: background 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
+}
+#header.scrolled {
+  background: rgba(244,238,229,0.88);
+  backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(106,75,55,0.08);
+}
+[data-theme="dark"] #header.scrolled {
+  background: rgba(20,18,16,0.88);
+}
+.header-inner {
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.logo {
+  font-family:'Playfair Display', serif;
+  font-size:1.65rem;
+  font-weight:600;
+  letter-spacing:0.18em;
+  color:var(--white);
+  transition: color 0.4s;
+}
+#header.scrolled .logo { color:var(--walnut); }
+[data-theme="dark"] #header.scrolled .logo { color:var(--gold); }
+
+nav { display:flex; align-items:center; gap:6px; }
+.nav-link {
+  font-size:0.82rem;
+  font-weight:500;
+  letter-spacing:0.06em;
+  color:rgba(255,255,255,0.85);
+  padding:8px 14px;
+  border-radius:6px;
+  transition: color 0.3s, background 0.3s;
+  text-transform:uppercase;
+  font-size:0.72rem;
+}
+#header.scrolled .nav-link { color:var(--text-secondary); }
+.nav-link:hover { color:var(--gold); background:rgba(201,161,91,0.08); }
+
+.header-controls { display:flex; align-items:center; gap:12px; }
+
+/* Lang switcher */
+.lang-switcher {
+  display:flex; align-items:center;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:var(--r-pill);
+  padding:4px;
+  backdrop-filter:blur(10px);
+  transition: background 0.4s, border-color 0.4s;
+}
+#header.scrolled .lang-switcher {
+  background:rgba(106,75,55,0.08);
+  border-color:var(--border);
+}
+.lang-btn {
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.06em;
+  padding:5px 12px;
+  border-radius:var(--r-pill);
+  color:rgba(255,255,255,0.7);
+  transition: all 0.3s;
+  line-height:1;
+}
+#header.scrolled .lang-btn { color:var(--text-muted); }
+.lang-btn.active {
+  background:var(--gold);
+  color:var(--white) !important;
+  box-shadow:0 2px 10px rgba(201,161,91,0.4);
+}
+
+/* Theme toggle */
+.theme-toggle {
+  width:38px; height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,0.85);
+  font-size:1.05rem;
+  transition: all 0.3s;
+  backdrop-filter:blur(10px);
+}
+#header.scrolled .theme-toggle {
+  background:rgba(106,75,55,0.08);
+  border-color:var(--border);
+  color:var(--text-secondary);
+}
+.theme-toggle:hover { background:var(--gold); color:var(--white); border-color:var(--gold); }
+
+/* Reserve CTA */
+.btn-reserve {
+  background:var(--gold);
+  color:var(--white);
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:10px 22px;
+  border-radius:var(--r-pill);
+  border:1px solid var(--gold);
+  transition: all 0.3s;
+  white-space:nowrap;
+}
+.btn-reserve:hover {
+  background:var(--gold-light);
+  box-shadow:0 4px 20px rgba(201,161,91,0.45);
+  transform:translateY(-1px);
+}
+
+/* Mobile menu toggle */
+.menu-toggle {
+  display:none;
+  width:38px; height:38px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  align-items:center; justify-content:center;
+  color:var(--white);
+  font-size:1.2rem;
+}
+
+/* Mobile nav */
+#mobile-nav {
+  position:fixed; top:var(--header-h); left:0; right:0; z-index:999;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
+  padding:16px 24px 24px;
+  display:none;
+  flex-direction:column; gap:4px;
+  box-shadow: var(--shadow);
+}
+#mobile-nav.open { display:flex; }
+.mobile-nav-link {
+  font-size:0.9rem;
+  font-weight:500;
+  color:var(--text-secondary);
+  padding:12px 16px;
+  border-radius:8px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-size:0.78rem;
+  transition:background 0.2s, color 0.2s;
+}
+.mobile-nav-link:hover { background:rgba(201,161,91,0.1); color:var(--gold); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  position:relative;
+  height:100svh; min-height:620px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=2000&q=85&fit=crop');
+  background-size:cover;
+  background-position:center 40%;
+  transform:scale(1.06);
+  transition:transform 8s ease;
+}
+#hero.loaded .hero-bg { transform:scale(1); }
+.hero-overlay {
+  position:absolute; inset:0;
+  background: linear-gradient(
+    170deg,
+    rgba(30,20,10,0.52) 0%,
+    rgba(20,12,6,0.68) 55%,
+    rgba(106,75,55,0.45) 100%
+  );
+}
+.hero-content {
+  position:relative; z-index:2;
+  text-align:center;
+  padding:0 clamp(20px,6vw,120px);
+  max-width:860px;
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:10px;
+  margin-bottom:28px;
+  opacity:0; animation:fadeUp 0.8s ease 0.4s forwards;
+}
+.hero-eyebrow span {
+  font-size:0.68rem;
+  font-weight:600;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+.hero-line { width:40px; height:1px; background:var(--gold); opacity:0.7; }
+
+.hero-headline {
+  font-family:'Playfair Display', serif;
+  font-size:clamp(2.8rem, 7vw, 5.2rem);
+  font-weight:500;
+  color:var(--white);
+  line-height:1.08;
+  letter-spacing:-0.01em;
+  margin-bottom:22px;
+  opacity:0; animation:fadeUp 0.9s ease 0.6s forwards;
+}
+[data-lang="ar"] .hero-headline { font-family:'Cairo',sans-serif; font-weight:700; line-height:1.25; }
+
+.hero-sub {
+  font-size:clamp(0.9rem,2vw,1.1rem);
+  font-weight:300;
+  color:rgba(255,255,255,0.76);
+  max-width:520px;
+  margin:0 auto 40px;
+  line-height:1.7;
+  opacity:0; animation:fadeUp 0.9s ease 0.8s forwards;
+}
+.hero-actions {
+  display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+  opacity:0; animation:fadeUp 0.9s ease 1.0s forwards;
+}
+.btn-primary {
+  background:var(--gold);
+  color:var(--white);
+  font-size:0.78rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:14px 32px;
+  border-radius:var(--r-pill);
+  transition:all 0.3s;
+  border:1px solid var(--gold);
+}
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,161,91,0.5); }
+.btn-outline {
+  background:rgba(255,255,255,0.10);
+  color:var(--white);
+  font-size:0.78rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:14px 32px;
+  border-radius:var(--r-pill);
+  border:1px solid rgba(255,255,255,0.35);
+  backdrop-filter:blur(8px);
+  transition:all 0.3s;
+}
+.btn-outline:hover { background:rgba(255,255,255,0.2); transform:translateY(-2px); }
+
+/* Review badge */
+.review-badge {
+  position:absolute; bottom:40px; right:clamp(20px,5vw,80px);
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.22);
+  border-radius:14px;
+  padding:14px 20px;
+  display:flex; align-items:center; gap:12px;
+  opacity:0; animation:fadeUp 0.9s ease 1.3s forwards;
+}
+.badge-stars { color:#FFD166; font-size:0.85rem; letter-spacing:1px; }
+.badge-info { display:flex; flex-direction:column; gap:2px; }
+.badge-score { font-size:1.3rem; font-weight:700; color:var(--white); line-height:1; }
+.badge-label { font-size:0.65rem; font-weight:500; color:rgba(255,255,255,0.6); letter-spacing:0.08em; text-transform:uppercase; }
+
+/* Scroll indicator */
+.scroll-hint {
+  position:absolute; bottom:40px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  opacity:0; animation:fadeIn 1s ease 1.6s forwards;
+}
+.scroll-hint span { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.5); }
+.scroll-mouse {
+  width:22px; height:34px;
+  border:1.5px solid rgba(255,255,255,0.35);
+  border-radius:11px;
+  display:flex; justify-content:center; padding-top:6px;
+}
+.scroll-wheel {
+  width:3px; height:7px;
+  background:rgba(255,255,255,0.6);
+  border-radius:2px;
+  animation:scrollWheel 1.8s ease-in-out infinite;
+}
+@keyframes scrollWheel { 0%{opacity:1;transform:translateY(0)} 80%{opacity:0;transform:translateY(8px)} 100%{opacity:0;transform:translateY(0)} }
+
+/* ============================================================
+   SECTION SHARED
+   ============================================================ */
+.section { padding:clamp(72px,10vw,140px) clamp(20px,6vw,100px); }
+.section-alt { background:var(--bg-alt); }
+.section-header { text-align:center; margin-bottom:clamp(48px,7vw,80px); }
+.section-title {
+  font-family:'Playfair Display', serif;
+  font-size:clamp(2.2rem,4.5vw,3.4rem);
+  font-weight:500;
+  color:var(--text-primary);
+  margin-top:12px;
+  line-height:1.15;
+}
+[data-lang="ar"] .section-title { font-family:'Cairo',sans-serif; font-weight:700; line-height:1.3; }
+.section-sub {
+  margin-top:16px;
+  font-size:1rem;
+  color:var(--text-muted);
+  max-width:520px;
+  margin-left:auto; margin-right:auto;
+  line-height:1.75;
+}
+.gold-divider {
+  width:52px; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin:0 auto 28px;
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(40px,6vw,96px);
+  align-items:center;
+  max-width:1200px; margin:0 auto;
+}
+.about-img-wrap {
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  aspect-ratio:4/5;
+}
+.about-img-wrap img {
+  width:100%; height:100%;
+  object-fit:cover;
+  transition:transform 0.8s ease;
+}
+.about-img-wrap:hover img { transform:scale(1.04); }
+.about-img-badge {
+  position:absolute; bottom:24px; left:24px;
+  background:rgba(20,18,16,0.72);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(201,161,91,0.3);
+  border-radius:12px;
+  padding:14px 20px;
+  display:flex; gap:16px;
+}
+[data-lang="ar"] .about-img-badge { left:auto; right:24px; }
+.badge-item { display:flex; flex-direction:column; gap:2px; }
+.badge-val { font-size:1.1rem; font-weight:700; color:var(--gold); line-height:1; }
+.badge-lab { font-size:0.62rem; color:rgba(255,255,255,0.55); text-transform:uppercase; letter-spacing:0.1em; }
+
+.about-content { display:flex; flex-direction:column; gap:28px; }
+.about-content .eyebrow { margin-bottom:4px; }
+.about-p { font-size:1.02rem; color:var(--text-muted); line-height:1.85; }
+.about-info { display:flex; flex-direction:column; gap:14px; margin-top:8px; }
+.about-info-row {
+  display:flex; align-items:center; gap:16px;
+  padding:14px 20px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  backdrop-filter:blur(10px);
+}
+.info-icon { font-size:1.15rem; color:var(--gold); flex-shrink:0; }
+.info-text { display:flex; flex-direction:column; }
+.info-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); }
+.info-val { font-size:0.9rem; font-weight:500; color:var(--text-primary); }
+
+.about-stats {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  margin-top:8px;
+}
+.stat-card {
+  text-align:center;
+  padding:20px 12px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  backdrop-filter:blur(10px);
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow); }
+.stat-val { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:600; color:var(--gold); line-height:1; }
+.stat-lab { font-size:0.62rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-top:6px; }
+
+/* ============================================================
+   MENU
+   ============================================================ */
+.menu-cats {
+  display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+  margin-bottom:48px;
+}
+.cat-pill {
+  padding:8px 20px;
+  border-radius:var(--r-pill);
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  border:1px solid var(--border);
+  color:var(--text-muted);
+  background:var(--bg-card);
+  backdrop-filter:blur(10px);
+  cursor:pointer;
+  transition:all 0.3s;
+}
+.cat-pill:hover, .cat-pill.active {
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--white);
+  box-shadow:0 4px 16px rgba(201,161,91,0.35);
+}
+
+.menu-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:24px;
+  max-width:1200px; margin:0 auto;
+}
+.menu-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--r-card);
+  overflow:hidden;
+  backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);
+  transition:transform 0.4s, box-shadow 0.4s;
+}
+.menu-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+.menu-card-img {
+  width:100%; aspect-ratio:4/3;
+  object-fit:cover;
+  transition:transform 0.6s ease;
+}
+.menu-card:hover .menu-card-img { transform:scale(1.04); }
+.menu-card-img-wrap { overflow:hidden; position:relative; }
+.menu-card-cat-tag {
+  position:absolute; top:14px; left:14px;
+  background:rgba(20,18,16,0.72);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(201,161,91,0.3);
+  color:var(--gold);
+  font-size:0.62rem;
+  font-weight:600;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:5px 12px;
+  border-radius:var(--r-pill);
+}
+[data-lang="ar"] .menu-card-cat-tag { left:auto; right:14px; }
+.menu-card-body { padding:22px 22px 0; }
+.menu-card-title {
+  font-family:'Playfair Display',serif;
+  font-size:1.22rem;
+  font-weight:500;
+  color:var(--text-primary);
+  margin-bottom:8px;
+}
+[data-lang="ar"] .menu-card-title { font-family:'Cairo',sans-serif; font-weight:600; }
+.menu-card-desc { font-size:0.86rem; color:var(--text-muted); line-height:1.7; }
+.menu-card-dishes { padding:0 22px 22px; margin-top:16px; display:none; flex-direction:column; gap:8px; }
+.menu-card.expanded .menu-card-dishes { display:flex; }
+.dish-item {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px;
+  background:rgba(201,161,91,0.06);
+  border:1px solid rgba(201,161,91,0.14);
+  border-radius:8px;
+}
+.dish-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.dish-name { font-size:0.84rem; font-weight:500; color:var(--text-primary); }
+.menu-card-toggle {
+  width:100%; padding:14px 22px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-top:1px solid var(--border);
+  margin-top:16px;
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--gold);
+  transition:background 0.2s;
+}
+.menu-card-toggle:hover { background:rgba(201,161,91,0.06); }
+.toggle-icon { font-size:1.1rem; transition:transform 0.3s; }
+.menu-card.expanded .toggle-icon { transform:rotate(45deg); }
+
+.menu-vat-note {
+  text-align:center;
+  margin-top:40px;
+  font-size:0.78rem;
+  color:var(--text-muted);
+  display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.menu-vat-note::before,.menu-vat-note::after { content:''; flex:1; max-width:80px; height:1px; background:var(--border); }
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.exp-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:20px;
+  max-width:1200px; margin:0 auto;
+}
+.exp-card {
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  cursor:default;
+}
+.exp-card.large { grid-row: span 2; }
+.exp-card img {
+  width:100%; height:100%;
+  object-fit:cover;
+  min-height:260px;
+  transition:transform 0.7s ease;
+}
+.exp-card.large img { min-height:580px; }
+.exp-card:hover img { transform:scale(1.05); }
+.exp-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(0deg, rgba(20,12,6,0.82) 0%, rgba(20,12,6,0.0) 55%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:28px;
+}
+.exp-label {
+  font-family:'Playfair Display',serif;
+  font-size:1.35rem;
+  font-weight:500;
+  color:var(--white);
+  margin-bottom:6px;
+}
+[data-lang="ar"] .exp-label { font-family:'Cairo',sans-serif; font-weight:600; font-size:1.2rem; }
+.exp-desc { font-size:0.82rem; color:rgba(255,255,255,0.66); line-height:1.6; }
+
+.exp-story {
+  max-width:640px; margin:60px auto 0;
+  text-align:center;
+}
+.exp-story p { font-size:1.05rem; color:var(--text-muted); line-height:1.9; }
+.exp-story strong { color:var(--text-secondary); font-weight:600; }
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+.gallery-masonry {
+  columns:3; column-gap:16px;
+  max-width:1200px; margin:0 auto;
+}
+.gallery-item {
+  display:inline-block; width:100%;
+  margin-bottom:16px;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  break-inside:avoid;
+}
+.gallery-item img {
+  width:100%; display:block;
+  transition:transform 0.6s ease;
+}
+.gallery-item:hover img { transform:scale(1.06); }
+.gallery-item::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(20,12,6,0.5) 100%);
+  opacity:0; transition:opacity 0.4s;
+}
+.gallery-item:hover::after { opacity:1; }
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+.reviews-rating-hero {
+  text-align:center;
+  margin-bottom:56px;
+}
+.big-rating {
+  font-family:'Playfair Display',serif;
+  font-size:5rem;
+  font-weight:500;
+  color:var(--gold);
+  line-height:1;
+}
+.rating-stars { font-size:1.4rem; color:#FFD166; letter-spacing:3px; margin:8px 0; }
+.rating-count { font-size:0.82rem; color:var(--text-muted); letter-spacing:0.08em; }
+
+.reviews-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+  max-width:1100px; margin:0 auto;
+}
+.review-card {
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:26px;
+  backdrop-filter:blur(12px);
+  box-shadow:var(--shadow);
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.review-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+.review-stars { color:#FFD166; font-size:0.85rem; letter-spacing:2px; margin-bottom:14px; }
+.review-text {
+  font-size:0.9rem;
+  color:var(--text-muted);
+  line-height:1.78;
+  margin-bottom:20px;
+  font-style:italic;
+}
+.review-text::before { content:'\201C'; font-size:1.4rem; color:var(--gold); line-height:0; vertical-align:-0.3em; margin-right:3px; }
+.reviewer { display:flex; align-items:center; gap:12px; }
+.reviewer-avatar {
+  width:38px; height:38px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--walnut),var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.85rem;
+  font-weight:700;
+  color:var(--white);
+  flex-shrink:0;
+}
+.reviewer-name { font-size:0.85rem; font-weight:600; color:var(--text-primary); }
+.reviewer-origin { font-size:0.7rem; color:var(--text-muted); margin-top:2px; }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-grid {
+  display:grid;
+  grid-template-columns:1fr 1.3fr;
+  gap:clamp(40px,6vw,80px);
+  align-items:start;
+  max-width:1100px; margin:0 auto;
+}
+.contact-info { display:flex; flex-direction:column; gap:24px; }
+.contact-block {
+  padding:26px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  backdrop-filter:blur(12px);
+}
+.contact-block-icon { font-size:1.4rem; margin-bottom:10px; }
+.contact-block-label {
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:6px;
+}
+.contact-block-val { font-size:0.95rem; font-weight:500; color:var(--text-primary); line-height:1.6; }
+.contact-block-val a { color:var(--gold); }
+.contact-block-val a:hover { text-decoration:underline; }
+.contact-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+.contact-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 24px;
+  border-radius:var(--r-pill);
+  font-size:0.76rem;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  transition:all 0.3s;
+  border:1px solid;
+}
+.contact-btn-gold { background:var(--gold); color:var(--white); border-color:var(--gold); }
+.contact-btn-gold:hover { background:var(--gold-light); box-shadow:0 4px 16px rgba(201,161,91,0.4); transform:translateY(-1px); }
+.contact-btn-outline { background:transparent; color:var(--text-secondary); border-color:var(--border); }
+.contact-btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+
+.map-wrap {
+  border-radius:18px;
+  overflow:hidden;
+  height:420px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+.map-wrap iframe { width:100%; height:100%; border:none; filter:grayscale(0.15); }
+[data-theme="dark"] .map-wrap iframe { filter:grayscale(0.5) invert(0.88) hue-rotate(180deg); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer {
+  background:var(--charcoal);
+  color:rgba(255,255,255,0.7);
+  padding:clamp(48px,7vw,80px) clamp(20px,6vw,100px) 32px;
+}
+.footer-grid {
+  display:grid;
+  grid-template-columns:1.6fr 1fr 1fr;
+  gap:clamp(32px,5vw,72px);
+  margin-bottom:56px;
+}
+.footer-brand .logo { color:var(--gold); margin-bottom:16px; display:block; }
+.footer-brand p { font-size:0.86rem; line-height:1.8; max-width:260px; }
+.footer-col-title {
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:20px;
+}
+.footer-links { display:flex; flex-direction:column; gap:10px; }
+.footer-link {
+  font-size:0.86rem;
+  color:rgba(255,255,255,0.55);
+  transition:color 0.2s;
+  display:inline-block;
+}
+.footer-link:hover { color:var(--gold); }
+.footer-contact-row { display:flex; gap:10px; align-items:flex-start; margin-bottom:12px; font-size:0.86rem; }
+.footer-contact-row span:first-child { color:var(--gold); flex-shrink:0; margin-top:2px; }
+
+.footer-bottom {
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:28px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+}
+.footer-copy { font-size:0.76rem; color:rgba(255,255,255,0.35); }
+.social-row { display:flex; gap:10px; }
+.social-btn {
+  width:36px; height:36px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,0.12);
+  display:flex; align-items:center; justify-content:center;
+  color:rgba(255,255,255,0.5);
+  font-size:0.85rem;
+  transition:all 0.3s;
+}
+.social-btn:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+
+/* ============================================================
+   ANIMATIONS & SCROLL
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.reveal {
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity 0.75s ease, transform 0.75s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:900px) {
+  .about-grid { grid-template-columns:1fr; }
+  .about-img-wrap { aspect-ratio:16/9; }
+  .about-stats { grid-template-columns:repeat(2,1fr); }
+  .exp-grid { grid-template-columns:1fr; }
+  .exp-card.large { grid-row:auto; }
+  .exp-card.large img { min-height:300px; }
+  .contact-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr 1fr; }
+  nav { display:none; }
+  .menu-toggle { display:flex; }
+  .gallery-masonry { columns:2; }
+}
+@media(max-width:580px) {
+  .gallery-masonry { columns:1; }
+  .about-stats { grid-template-columns:repeat(4,1fr); }
+  .footer-grid { grid-template-columns:1fr; }
+  .hero-headline { font-size:2.4rem; }
+  .review-badge { display:none; }
+}
+
+/* Gold accent on section hover effect */
+.section-divider {
+  width:100%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--border), transparent);
+  margin:0;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">LUUMA</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-inner">
+    <a href="#" class="logo">LUUMA</a>
+
+    <nav>
+      <a href="#about"      class="nav-link" data-en="About"      data-ar="عن المطعم">About</a>
+      <a href="#menu"       class="nav-link" data-en="Menu"       data-ar="القائمة">Menu</a>
+      <a href="#experience" class="nav-link" data-en="Experience" data-ar="التجربة">Experience</a>
+      <a href="#gallery"    class="nav-link" data-en="Gallery"    data-ar="المعرض">Gallery</a>
+      <a href="#contact"    class="nav-link" data-en="Contact"    data-ar="تواصل معنا">Contact</a>
+    </nav>
+
+    <div class="header-controls">
+      <div class="lang-switcher" role="group" aria-label="Language switcher">
+        <button class="lang-btn active" data-lang-target="en">EN</button>
+        <button class="lang-btn" data-lang-target="ar">ع</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+      <a href="#contact" class="btn-reserve" data-en="Reserve Your Visit" data-ar="احجز زيارتك">Reserve Your Visit</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div id="mobile-nav">
+  <a href="#about"      class="mobile-nav-link" data-en="About"      data-ar="عن المطعم">About</a>
+  <a href="#menu"       class="mobile-nav-link" data-en="Menu"       data-ar="القائمة">Menu</a>
+  <a href="#experience" class="mobile-nav-link" data-en="Experience" data-ar="التجربة">Experience</a>
+  <a href="#gallery"    class="mobile-nav-link" data-en="Gallery"    data-ar="المعرض">Gallery</a>
+  <a href="#contact"    class="mobile-nav-link" data-en="Contact"    data-ar="تواصل معنا">Contact</a>
+  <a href="#contact"    class="btn-reserve" style="margin-top:8px;text-align:center" data-en="Reserve Your Visit" data-ar="احجز زيارتك">Reserve Your Visit</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-line"></div>
+      <span data-en="Zamalek · Cairo · Nile View" data-ar="الزمالك · القاهرة · إطلالة النيل">Zamalek · Cairo · Nile View</span>
+      <div class="hero-line"></div>
+    </div>
+    <h1 class="hero-headline">
+      <span data-en="Luxury Dining<br>Beside The Nile" data-ar="تجربة راقية<br>على ضفاف النيل">Luxury Dining<br>Beside The Nile</span>
+    </h1>
+    <p class="hero-sub" data-en="Premium dining experience in the heart of Zamalek with breathtaking Nile views, handcrafted dishes, and unforgettable moments." data-ar="تجربة طعام استثنائية في قلب الزمالك، مع إطلالات خلابة على النيل وأطباق فاخرة ولحظات لا تُنسى.">
+      Premium dining experience in the heart of Zamalek with breathtaking Nile views, handcrafted dishes, and unforgettable moments.
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary" data-en="Explore Menu" data-ar="استكشف القائمة">Explore Menu</a>
+      <a href="#gallery" class="btn-outline" data-en="View Gallery" data-ar="مشاهدة المعرض">View Gallery</a>
+    </div>
+  </div>
+
+  <div class="review-badge">
+    <div>
+      <div class="badge-stars">★★★★★</div>
+    </div>
+    <div class="badge-info">
+      <div class="badge-score">4.7</div>
+      <div class="badge-label" data-en="Guest Rating" data-ar="تقييم الضيوف">Guest Rating</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span data-en="Scroll" data-ar="اسحب">Scroll</span>
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section id="about" class="section">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=900&q=85&fit=crop" alt="LUUMA restaurant Nile view" loading="lazy" />
+      <div class="about-img-badge">
+        <div class="badge-item">
+          <div class="badge-val">4.7</div>
+          <div class="badge-lab" data-en="Rating" data-ar="التقييم">Rating</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-val">2018</div>
+          <div class="badge-lab" data-en="Est." data-ar="تأسس">Est.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-content reveal">
+      <div>
+        <p class="eyebrow" data-en="Our Story" data-ar="قصتنا">Our Story</p>
+        <h2 class="display" style="font-size:clamp(2rem,3.5vw,2.9rem); margin-top:10px;" data-en="Where Cairo's Heart<br>Meets The Nile" data-ar="حيث قلب القاهرة<br>يلتقي بالنيل">
+          Where Cairo's Heart<br>Meets The Nile
+        </h2>
+      </div>
+      <p class="about-p" data-en="LUUMA sits on Abu El Feda Street in Zamalek, just beside Beit Ward, with one of Cairo's most breathtaking direct Nile views. From the first light of morning to the amber glow of late night, every table is a front-row seat to the river that defines this city." data-ar="لوما يقع على شارع أبو الفدا في الزمالك، بجوار بيت ورد، مع واحدة من أجمل الإطلالات المباشرة على النيل في القاهرة. من أولى أشعة الصباح حتى ضوء الليل المتأخر، كل طاولة هي مقعد في الصف الأول أمام النهر الذي يُعرِّف هذه المدينة.">
+        LUUMA sits on Abu El Feda Street in Zamalek, just beside Beit Ward, with one of Cairo's most breathtaking direct Nile views. From the first light of morning to the amber glow of late night, every table is a front-row seat to the river that defines this city.
+      </p>
+      <p class="about-p" data-en="The atmosphere is a careful balance: open-air elegance, warm materials, and the kind of unhurried hospitality that makes guests return. An all-day menu that moves from lavish breakfasts to exceptional evening fare — each dish handcrafted with seasonal ingredients and deep culinary intent." data-ar="الأجواء توازن دقيق: أناقة في الهواء الطلق، ومواد دافئة، وضيافة من النوع الذي يجعل الضيوف يعودون. قائمة طعام على مدار اليوم تنتقل من الفطور الفاخر إلى العشاء الاستثنائي — كل طبق مصنوع بعناية من مكونات موسمية.">
+        The atmosphere is a careful balance: open-air elegance, warm materials, and the kind of unhurried hospitality that makes guests return. An all-day menu that moves from lavish breakfasts to exceptional evening fare — each dish handcrafted with seasonal ingredients and deep culinary intent.
+      </p>
+
+      <div class="about-info">
+        <div class="about-info-row">
+          <span class="info-icon">📍</span>
+          <div class="info-text">
+            <span class="info-label" data-en="Location" data-ar="الموقع">Location</span>
+            <span class="info-val" data-en="Abu El Feda Street, Zamalek, Cairo" data-ar="شارع أبو الفدا، الزمالك، القاهرة">Abu El Feda Street, Zamalek, Cairo</span>
+          </div>
+        </div>
+        <div class="about-info-row">
+          <span class="info-icon">🕐</span>
+          <div class="info-text">
+            <span class="info-label" data-en="Open Daily" data-ar="مفتوح يومياً">Open Daily</span>
+            <span class="info-val">8:00 AM – 5:00 AM</span>
+          </div>
+        </div>
+        <div class="about-info-row">
+          <span class="info-icon">📞</span>
+          <div class="info-text">
+            <span class="info-label" data-en="Reservations" data-ar="الحجز">Reservations</span>
+            <span class="info-val"><a href="tel:+201122254106">+20 11 22254106</a></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-val">4.7</div>
+          <div class="stat-lab" data-en="Rating" data-ar="التقييم">Rating</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">21h</div>
+          <div class="stat-lab" data-en="Daily Open" data-ar="ساعات العمل">Daily Open</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">Nile</div>
+          <div class="stat-lab" data-en="View" data-ar="إطلالة">View</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">★</div>
+          <div class="stat-lab" data-en="Premium" data-ar="متميز">Premium</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== MENU ========== -->
+<section id="menu" class="section section-alt">
+  <div class="section-header reveal">
+    <p class="eyebrow" data-en="Signature Menu" data-ar="القائمة المميزة">Signature Menu</p>
+    <div class="gold-divider" style="margin-top:14px;"></div>
+    <h2 class="section-title" data-en="Crafted With Intention" data-ar="مُعدّ بعناية واهتمام">Crafted With Intention</h2>
+    <p class="section-sub" data-en="Seasonal ingredients, refined technique, and an unwavering attention to quality — every plate tells a story." data-ar="مكونات موسمية، تقنية راقية، واهتمام لا يتزعزع بالجودة — كل طبق يحكي قصة.">
+      Seasonal ingredients, refined technique, and an unwavering attention to quality — every plate tells a story.
+    </p>
+  </div>
+
+  <div class="menu-cats reveal" id="menuCats">
+    <button class="cat-pill active" data-cat="all" data-en="All" data-ar="الكل">All</button>
+    <button class="cat-pill" data-cat="breakfast" data-en="Breakfast" data-ar="الإفطار">Breakfast</button>
+    <button class="cat-pill" data-cat="fish" data-en="Fish" data-ar="السمك">Fish</button>
+    <button class="cat-pill" data-cat="beef" data-en="Beef" data-ar="اللحوم">Beef</button>
+    <button class="cat-pill" data-cat="poultry" data-en="Poultry" data-ar="الدواجن">Poultry</button>
+    <button class="cat-pill" data-cat="pizza" data-en="Pizza" data-ar="بيتزا">Pizza</button>
+    <button class="cat-pill" data-cat="pasta" data-en="Pasta" data-ar="باستا">Pasta</button>
+    <button class="cat-pill" data-cat="salads" data-en="Salads" data-ar="السلطات">Salads</button>
+    <button class="cat-pill" data-cat="desserts" data-en="Desserts" data-ar="الحلويات">Desserts</button>
+    <button class="cat-pill" data-cat="coffee" data-en="Coffee" data-ar="القهوة">Coffee</button>
+    <button class="cat-pill" data-cat="feteer" data-en="Feteer" data-ar="فطير">Feteer</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid">
+
+    <!-- Breakfast -->
+    <div class="menu-card reveal" data-cat="breakfast">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&fit=crop" alt="Breakfast" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Breakfast" data-ar="الإفطار">Breakfast</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Morning Platters" data-ar="أطباق الصباح">Morning Platters</h3>
+        <p class="menu-card-desc" data-en="A lavish selection of Egyptian and international breakfast spreads, served all morning on the Nile terrace." data-ar="تشكيلة فاخرة من أطباق الإفطار المصرية والدولية، تُقدَّم طوال الصباح على شرفة النيل.">A lavish selection of Egyptian and international breakfast spreads, served all morning on the Nile terrace.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Turkish Platter</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Luuma's Trio-Mendous Platter</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Feteer Meshaltet Platter</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Fish -->
+    <div class="menu-card reveal" data-cat="fish">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&fit=crop" alt="Fish" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Fish & Seafood" data-ar="الأسماك والمأكولات البحرية">Fish & Seafood</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="River & Sea" data-ar="النهر والبحر">River & Sea</h3>
+        <p class="menu-card-desc" data-en="Freshest catches, prepared with Mediterranean technique and a distinctly Egyptian soul." data-ar="أطازج الصيد، مُحضَّرة بتقنية متوسطية وروح مصرية أصيلة.">Freshest catches, prepared with Mediterranean technique and a distinctly Egyptian soul.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Pan Seared Salmon Filet</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Grilled Prawns</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Seafood Paella</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Beef -->
+    <div class="menu-card reveal" data-cat="beef">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1544025162-d76594e4e8db?w=600&q=80&fit=crop" alt="Beef" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Beef & Steaks" data-ar="اللحوم والستيك">Beef & Steaks</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Prime Cuts" data-ar="أجود القطعات">Prime Cuts</h3>
+        <p class="menu-card-desc" data-en="Aged prime cuts cooked to perfection — from the drama of a Tomahawk to the refinement of truffle risotto." data-ar="قطعات ممتازة مُعتَّقة، تُطهى بشكل مثالي — من روعة التوماهوك إلى رقي ريزوتو الترافل.">Aged prime cuts cooked to perfection — from the drama of a Tomahawk to the refinement of truffle risotto.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Tomahawk</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Beef Rib Eye</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Truffle Steak Risotto</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Poultry -->
+    <div class="menu-card reveal" data-cat="poultry">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&q=80&fit=crop" alt="Poultry" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Poultry" data-ar="الدواجن">Poultry</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Refined Poultry" data-ar="دواجن متميزة">Refined Poultry</h3>
+        <p class="menu-card-desc" data-en="Free-range poultry prepared with aromatic herbs, bold spices, and elegant saucing." data-ar="دواجن نشأت بحرية، محضرة بالأعشاب العطرية والبهارات الجريئة والصلصات الأنيقة.">Free-range poultry prepared with aromatic herbs, bold spices, and elegant saucing.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Herb-Roasted Chicken</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Duck Confit</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Chicken Milanese</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Pizza -->
+    <div class="menu-card reveal" data-cat="pizza">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80&fit=crop" alt="Pizza" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Pizza" data-ar="بيتزا">Pizza</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Wood-Fired Pies" data-ar="بيتزا من الفرن الخشبي">Wood-Fired Pies</h3>
+        <p class="menu-card-desc" data-en="Slow-fermented dough, artisan toppings — a bridge between Italian tradition and Luuma's personality." data-ar="عجينة مخمرة ببطء، إضافات حرفية — جسر بين التقاليد الإيطالية وشخصية لوما.">Slow-fermented dough, artisan toppings — a bridge between Italian tradition and Luuma's personality.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Truffle & Burrata</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Spicy Pepperoni</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Smoked Salmon</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Pasta -->
+    <div class="menu-card reveal" data-cat="pasta">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=600&q=80&fit=crop" alt="Pasta" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Pasta" data-ar="باستا">Pasta</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="House-Made Pasta" data-ar="باستا مصنوعة يدوياً">House-Made Pasta</h3>
+        <p class="menu-card-desc" data-en="Hand-rolled, slow-cooked pasta in sauces built from scratch — comfort elevated to art." data-ar="باستا مصنوعة يدوياً، مطهية ببطء في صلصات مُعدَّة من الصفر — الراحة ترقى إلى مستوى الفن.">Hand-rolled, slow-cooked pasta in sauces built from scratch — comfort elevated to art.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Lobster Tagliatelle</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Cacio e Pepe</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Truffle Linguine</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Salads -->
+    <div class="menu-card reveal" data-cat="salads">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&fit=crop" alt="Salads" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Salads" data-ar="السلطات">Salads</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Garden Compositions" data-ar="تشكيلات الخضار">Garden Compositions</h3>
+        <p class="menu-card-desc" data-en="Seasonal garden produce, house-made dressings, and unexpected ingredient pairings." data-ar="منتجات موسمية طازجة، صلصات محضرة في المطبخ، ومزيج مبتكر من المكونات.">Seasonal garden produce, house-made dressings, and unexpected ingredient pairings.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Burrata & Heritage Tomato</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Caesar with Anchovies</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Warm Goat Cheese Salad</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Desserts -->
+    <div class="menu-card reveal" data-cat="desserts">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80&fit=crop" alt="Desserts" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Desserts" data-ar="الحلويات">Desserts</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Sweet Finales" data-ar="نهايات حلوة">Sweet Finales</h3>
+        <p class="menu-card-desc" data-en="Each dessert is an occasion — indulgent, artful, and made to linger." data-ar="كل حلوى مناسبة خاصة — مُغرية، فنية، ومصممة لتترك أثراً.">Each dessert is an occasion — indulgent, artful, and made to linger.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Chocolate Soufflé</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Signature Cheesecake</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Crème Brûlée</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Dishes" data-ar="عرض الأطباق">View Dishes</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Coffee -->
+    <div class="menu-card reveal" data-cat="coffee">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&fit=crop" alt="Coffee" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Coffee & Drinks" data-ar="القهوة والمشروبات">Coffee & Drinks</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Liquid Artistry" data-ar="فنون السوائل">Liquid Artistry</h3>
+        <p class="menu-card-desc" data-en="Specialty coffee from single-origin beans, refreshing cold brew, and handcrafted shakes." data-ar="قهوة مختصة من حبوب أحادية المصدر، وكولد برو منعش، وعصائر مصنوعة يدوياً.">Specialty coffee from single-origin beans, refreshing cold brew, and handcrafted shakes.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Single Origin Pour Over</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Luuma Cold Brew</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Signature Shakes</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Drinks" data-ar="عرض المشروبات">View Drinks</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+    <!-- Feteer -->
+    <div class="menu-card reveal" data-cat="feteer">
+      <div class="menu-card-img-wrap">
+        <img class="menu-card-img" src="https://images.unsplash.com/photo-1587736491913-c741bafbd10e?w=600&q=80&fit=crop" alt="Feteer" loading="lazy" />
+        <span class="menu-card-cat-tag" data-en="Feteer" data-ar="الفطير">Feteer</span>
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-title" data-en="Egyptian Heritage" data-ar="التراث المصري">Egyptian Heritage</h3>
+        <p class="menu-card-desc" data-en="The beloved Feteer Meshaltet — Egypt's most iconic layered bread — in both savory and sweet forms." data-ar="الفطير المشلتت المحبوب — خبز مصر المطبق الأشهر — بأشكاله المالحة والحلوة.">The beloved Feteer Meshaltet — Egypt's most iconic layered bread — in both savory and sweet forms.</p>
+      </div>
+      <div class="menu-card-dishes">
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Classic Savory Feteer</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Honey & Cream Feteer</span></div>
+        <div class="dish-item"><div class="dish-dot"></div><span class="dish-name">Nutella & Banana Feteer</span></div>
+      </div>
+      <button class="menu-card-toggle">
+        <span data-en="View Menu" data-ar="عرض القائمة">View Menu</span>
+        <span class="toggle-icon">+</span>
+      </button>
+    </div>
+
+  </div><!-- /menu-grid -->
+
+  <p class="menu-vat-note reveal" data-en="All prices are subject to 12% service charge and 14% VAT." data-ar="جميع الأسعار تخضع لرسوم خدمة 12% وضريبة قيمة مضافة 14%.">All prices are subject to 12% service charge and 14% VAT.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== EXPERIENCE ========== -->
+<section id="experience" class="section">
+  <div class="section-header reveal">
+    <p class="eyebrow" data-en="The Experience" data-ar="التجربة">The Experience</p>
+    <div class="gold-divider" style="margin-top:14px;"></div>
+    <h2 class="section-title" data-en="Every Hour Has Its Beauty" data-ar="كل ساعة لها جمالها">Every Hour Has Its Beauty</h2>
+    <p class="section-sub" data-en="From the first morning light over the Nile to the luminous glow of midnight — LUUMA transforms throughout the day." data-ar="من ضوء الصباح الأول على النيل إلى بريق الليل — لوما يتحول على مدار اليوم.">
+      From the first morning light over the Nile to the luminous glow of midnight — LUUMA transforms throughout the day.
+    </p>
+  </div>
+
+  <div class="exp-grid reveal">
+    <div class="exp-card large">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85&fit=crop" alt="LUUMA Nile View" loading="lazy" />
+      <div class="exp-overlay">
+        <h3 class="exp-label" data-en="The Nile Terrace" data-ar="شرفة النيل">The Nile Terrace</h3>
+        <p class="exp-desc" data-en="Open-air dining with Cairo's most direct Nile view — every table a private front row." data-ar="طعام في الهواء الطلق مع أجمل إطلالة مباشرة على النيل في القاهرة.">Open-air dining with Cairo's most direct Nile view — every table a private front row.</p>
+      </div>
+    </div>
+    <div class="exp-card">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&fit=crop" alt="Breakfast Experience" loading="lazy" />
+      <div class="exp-overlay">
+        <h3 class="exp-label" data-en="Morning Ritual" data-ar="طقس الصباح">Morning Ritual</h3>
+        <p class="exp-desc" data-en="Start the day right with a lavish breakfast spread beside the river." data-ar="ابدأ يومك بفطور فاخر بجوار النهر.">Start the day right with a lavish breakfast spread beside the river.</p>
+      </div>
+    </div>
+    <div class="exp-card">
+      <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=600&q=80&fit=crop" alt="Night Ambiance" loading="lazy" />
+      <div class="exp-overlay">
+        <h3 class="exp-label" data-en="Night Ambience" data-ar="أجواء الليل">Night Ambience</h3>
+        <p class="exp-desc" data-en="When Cairo sleeps, Luuma glows — intimate, warm, endlessly inviting." data-ar="حين تنام القاهرة، يتوهج لوما — حميمي، دافئ، مغرٍ باستمرار.">When Cairo sleeps, Luuma glows — intimate, warm, endlessly inviting.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-story reveal">
+    <p data-en='<strong>LUUMA is not just a restaurant.</strong> It is a place people return to — not always for the food alone, but for how it makes them feel. The particular quality of afternoon light on the Nile. The way the city slows when you are seated here. The warmth of a welcome that feels genuinely earned.' data-ar='<strong>لوما ليس مجرد مطعم.</strong> إنه مكان يعود إليه الناس — ليس دائماً للطعام وحده، بل لما يشعرون به هنا. ضوء العصر الفريد على النيل. الطريقة التي تتباطأ بها المدينة حين تجلس هنا. دفء الترحيب الذي يشعر أنه حقيقي ومكتسب.'>
+      <strong>LUUMA is not just a restaurant.</strong> It is a place people return to — not always for the food alone, but for how it makes them feel. The particular quality of afternoon light on the Nile. The way the city slows when you are seated here. The warmth of a welcome that feels genuinely earned.
+    </p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== GALLERY ========== -->
+<section id="gallery" class="section section-alt">
+  <div class="section-header reveal">
+    <p class="eyebrow" data-en="Gallery" data-ar="المعرض">Gallery</p>
+    <div class="gold-divider" style="margin-top:14px;"></div>
+    <h2 class="section-title" data-en="A Visual Journey" data-ar="رحلة بصرية">A Visual Journey</h2>
+  </div>
+
+  <div class="gallery-masonry reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&fit=crop" alt="Dining experience" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&fit=crop" alt="Food" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&fit=crop" alt="Coffee" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80&fit=crop" alt="Desserts" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&fit=crop" alt="Seafood" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&fit=crop" alt="Restaurant interior" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1544025162-d76594e4e8db?w=600&q=80&fit=crop" alt="Steak" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&fit=crop" alt="Salad" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&q=80&fit=crop" alt="Outdoor seating" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== REVIEWS ========== -->
+<section id="reviews" class="section">
+  <div class="section-header reveal">
+    <p class="eyebrow" data-en="Guest Reviews" data-ar="آراء الضيوف">Guest Reviews</p>
+    <div class="gold-divider" style="margin-top:14px;"></div>
+    <h2 class="section-title" data-en="What Our Guests Say" data-ar="ما يقوله ضيوفنا">What Our Guests Say</h2>
+  </div>
+
+  <div class="reviews-rating-hero reveal">
+    <div class="big-rating">4.7</div>
+    <div class="rating-stars">★★★★★</div>
+    <div class="rating-count" data-en="Based on 1,400+ reviews" data-ar="بناءً على أكثر من 1,400 تقييم">Based on 1,400+ reviews</div>
+  </div>
+
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text" data-en="Quite simply the most beautiful view I have had from a restaurant table in Cairo. The food is exceptional — the Seafood Paella alone is worth the visit. We will be back." data-ar="ببساطة أجمل إطلالة رأيتها من طاولة مطعم في القاهرة. الطعام استثنائي — باييلا المأكولات البحرية وحدها تستحق الزيارة. سنعود.">Quite simply the most beautiful view I have had from a restaurant table in Cairo. The food is exceptional — the Seafood Paella alone is worth the visit. We will be back.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">SH</div>
+        <div>
+          <div class="reviewer-name">Sara H.</div>
+          <div class="reviewer-origin" data-en="Cairo, Egypt" data-ar="القاهرة، مصر">Cairo, Egypt</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text" data-en="We celebrated our anniversary here and they made it truly special. The Tomahawk was cooked perfectly. The ambience at night is something else — Cairo's skyline reflected on the Nile, candlelight, warmth." data-ar="احتفلنا بذكرى زواجنا هنا وجعلوها لحظة رائعة حقاً. الستيك كان مطهياً بشكل مثالي. الأجواء ليلاً شيء آخر تماماً.">We celebrated our anniversary here and they made it truly special. The Tomahawk was cooked perfectly. The ambience at night is something else — Cairo's skyline reflected on the Nile, candlelight, warmth.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">KM</div>
+        <div>
+          <div class="reviewer-name">Karim M.</div>
+          <div class="reviewer-origin" data-en="Zamalek, Cairo" data-ar="الزمالك، القاهرة">Zamalek, Cairo</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text" data-en="The breakfast here is a genuine event. The Turkish Platter and the Feteer Meshaltet together is a combination I have been thinking about every morning since. Outstanding service, too." data-ar="الإفطار هنا تجربة حقيقية بكل ما تعني الكلمة. الطبق التركي والفطير المشلتت معاً تشكيلة لم أتوقف عن التفكير فيها منذ ذلك اليوم.">The breakfast here is a genuine event. The Turkish Platter and the Feteer Meshaltet together is a combination I have been thinking about every morning since. Outstanding service, too.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">NA</div>
+        <div>
+          <div class="reviewer-name">Nadia A.</div>
+          <div class="reviewer-origin" data-en="Giza, Egypt" data-ar="الجيزة، مصر">Giza, Egypt</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text" data-en="A place that understands hospitality at a very high level. The Crème Brûlée is perfection. Sitting by the Nile with coffee in the morning is simply one of the best ways to start a day in this city." data-ar="مكان يفهم الضيافة على مستوى رفيع جداً. كريم بروليه مثالية. الجلوس بجانب النيل مع القهوة صباحاً هو ببساطة أفضل طريقة لبدء يوم في هذه المدينة.">A place that understands hospitality at a very high level. The Crème Brûlée is perfection. Sitting by the Nile with coffee in the morning is simply one of the best ways to start a day in this city.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">OY</div>
+        <div>
+          <div class="reviewer-name">Omar Y.</div>
+          <div class="reviewer-origin" data-en="Dubai, UAE" data-ar="دبي، الإمارات">Dubai, UAE</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text" data-en="Visited during sunset and it was absolutely magical. The Salmon Filet was perfectly seared and the presentation was restaurant-caliber. LUUMA sets the bar in Zamalek." data-ar="زرت المكان وقت غروب الشمس وكان سحرياً تماماً. فيليه السلمون كان مشوياً بشكل مثالي والتقديم كان على مستوى المطاعم الفاخرة.">Visited during sunset and it was absolutely magical. The Salmon Filet was perfectly seared and the presentation was restaurant-caliber. LUUMA sets the bar in Zamalek.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">LF</div>
+        <div>
+          <div class="reviewer-name">Layla F.</div>
+          <div class="reviewer-origin" data-en="Heliopolis, Cairo" data-ar="مصر الجديدة، القاهرة">Heliopolis, Cairo</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text" data-en="Brought clients here for a business dinner — best decision I have made this quarter. The setting does half the work, and the kitchen does the rest. Flawless from start to finish." data-ar="أحضرت عملاء هنا لعشاء عمل — أفضل قرار اتخذته هذا الربع. المكان يقوم بنصف العمل والمطبخ يقوم بالباقي. مثالي من البداية للنهاية.">Brought clients here for a business dinner — best decision I have made this quarter. The setting does half the work, and the kitchen does the rest. Flawless from start to finish.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">TZ</div>
+        <div>
+          <div class="reviewer-name">Tarek Z.</div>
+          <div class="reviewer-origin" data-en="Cairo, Egypt" data-ar="القاهرة، مصر">Cairo, Egypt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== CONTACT ========== -->
+<section id="contact" class="section section-alt">
+  <div class="section-header reveal">
+    <p class="eyebrow" data-en="Find Us" data-ar="ابحث عنا">Find Us</p>
+    <div class="gold-divider" style="margin-top:14px;"></div>
+    <h2 class="section-title" data-en="Reserve Your Table" data-ar="احجز طاولتك">Reserve Your Table</h2>
+    <p class="section-sub" data-en="We are open daily, from morning breakfast to late-night dining. Walk in or call ahead." data-ar="نحن مفتوحون يومياً، من فطور الصباح حتى عشاء الليل المتأخر. تفضل أو اتصل مسبقاً.">We are open daily, from morning breakfast to late-night dining. Walk in or call ahead.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="contact-block">
+        <div class="contact-block-icon">📍</div>
+        <div class="contact-block-label" data-en="Address" data-ar="العنوان">Address</div>
+        <div class="contact-block-val" data-en="Abu El Feda Street, Zamalek<br>Cairo, Egypt" data-ar="شارع أبو الفدا، الزمالك<br>القاهرة، مصر">Abu El Feda Street, Zamalek<br>Cairo, Egypt</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-icon">🕐</div>
+        <div class="contact-block-label" data-en="Working Hours" data-ar="ساعات العمل">Working Hours</div>
+        <div class="contact-block-val" data-en="Daily — 8:00 AM until 5:00 AM" data-ar="يومياً — من الساعة 8:00 صباحاً حتى 5:00 فجراً">Daily — 8:00 AM until 5:00 AM</div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-icon">📞</div>
+        <div class="contact-block-label" data-en="Phone" data-ar="الهاتف">Phone</div>
+        <div class="contact-block-val"><a href="tel:+201122254106">+20 11 22254106</a></div>
+        <div class="contact-actions">
+          <a href="tel:+201122254106" class="contact-btn contact-btn-gold">
+            <span>📞</span> <span data-en="Call Now" data-ar="اتصل الآن">Call Now</span>
+          </a>
+          <a href="https://maps.google.com/?q=Abu+El+Feda+Street+Zamalek+Cairo" target="_blank" class="contact-btn contact-btn-outline">
+            <span>🗺</span> <span data-en="Get Directions" data-ar="احصل على الاتجاهات">Get Directions</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-wrap reveal">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.1!2d31.2244!3d30.0614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14584154e1f0b8af%3A0x8dca3543e2a0e8b!2sZamalek%2C+Cairo+Governorate%2C+Egypt!5e0!3m2!1sen!2seg!4v1700000000000!5m2!1sen!2seg"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="LUUMA location map"
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">LUUMA</span>
+      <p data-en="Luxury dining beside the Nile in the heart of Zamalek, Cairo. Open daily from 8:00 AM to 5:00 AM." data-ar="طعام فاخر بجوار النيل في قلب الزمالك، القاهرة. مفتوح يومياً من 8 صباحاً حتى 5 فجراً.">Luxury dining beside the Nile in the heart of Zamalek, Cairo. Open daily from 8:00 AM to 5:00 AM.</p>
+      <div class="social-row" style="margin-top:24px">
+        <a href="#" class="social-btn" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="TikTok">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 12a4 4 0 100 8 4 4 0 000-8zm8-8h-2.5A2.5 2.5 0 0112 6.5V13a4 4 0 10-3-3.87V7a7 7 0 107 7V7.5A5.5 5.5 0 0017 4z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title" data-en="Navigation" data-ar="التصفح">Navigation</div>
+      <div class="footer-links">
+        <a href="#about" class="footer-link" data-en="About LUUMA" data-ar="عن لوما">About LUUMA</a>
+        <a href="#menu" class="footer-link" data-en="Our Menu" data-ar="قائمتنا">Our Menu</a>
+        <a href="#experience" class="footer-link" data-en="The Experience" data-ar="التجربة">The Experience</a>
+        <a href="#gallery" class="footer-link" data-en="Gallery" data-ar="المعرض">Gallery</a>
+        <a href="#contact" class="footer-link" data-en="Reserve a Table" data-ar="حجز طاولة">Reserve a Table</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title" data-en="Contact" data-ar="تواصل معنا">Contact</div>
+      <div class="footer-contact-row">
+        <span>📍</span>
+        <span data-en="Abu El Feda St., Zamalek, Cairo" data-ar="شارع أبو الفدا، الزمالك، القاهرة">Abu El Feda St., Zamalek, Cairo</span>
+      </div>
+      <div class="footer-contact-row">
+        <span>🕐</span>
+        <span data-en="Daily · 8 AM – 5 AM" data-ar="يومياً · 8 ص – 5 ف">Daily · 8 AM – 5 AM</span>
+      </div>
+      <div class="footer-contact-row">
+        <span>📞</span>
+        <a href="tel:+201122254106" style="color:var(--gold)">+20 11 22254106</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy" data-en="© 2025 LUUMA Restaurant. All rights reserved." data-ar="© 2025 مطعم لوما. جميع الحقوق محفوظة.">© 2025 LUUMA Restaurant. All rights reserved.</p>
+    <p class="footer-copy" style="color:rgba(255,255,255,0.2);" data-en="Zamalek · Cairo · Egypt" data-ar="الزمالك · القاهرة · مصر">Zamalek · Cairo · Egypt</p>
+  </div>
+</footer>
+
+<!-- ============================================================
+   JAVASCRIPT
+   ============================================================ -->
+<script>
+/* --- LOADER --- */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    document.getElementById('hero').classList.add('loaded');
+  }, 1900);
+});
+
+/* --- HEADER SCROLL --- */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive:true });
+
+/* --- THEME TOGGLE --- */
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+let dark = false;
+themeToggle.addEventListener('click', () => {
+  dark = !dark;
+  html.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeToggle.textContent = dark ? '☀️' : '🌙';
+});
+
+/* --- MOBILE MENU --- */
+const menuToggle = document.getElementById('menuToggle');
+const mobileNav  = document.getElementById('mobile-nav');
+menuToggle.addEventListener('click', () => {
+  mobileNav.classList.toggle('open');
+  menuToggle.textContent = mobileNav.classList.contains('open') ? '✕' : '☰';
+});
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileNav.classList.remove('open');
+  menuToggle.textContent = '☰';
+}));
+
+/* --- LANGUAGE --- */
+const langBtns = document.querySelectorAll('.lang-btn');
+function applyLang(lang) {
+  html.setAttribute('dir', lang==='ar'?'rtl':'ltr');
+  html.setAttribute('lang', lang);
+  html.setAttribute('data-lang', lang);
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const txt = el.getAttribute('data-'+lang);
+    if (txt) el.innerHTML = txt;
+  });
+  langBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-lang-target')===lang));
+}
+langBtns.forEach(btn => btn.addEventListener('click', () => {
+  applyLang(btn.getAttribute('data-lang-target'));
+}));
+
+/* --- MENU CATEGORY FILTER --- */
+const catPills = document.querySelectorAll('.cat-pill');
+const menuCards = document.querySelectorAll('.menu-card');
+catPills.forEach(pill => {
+  pill.addEventListener('click', () => {
+    catPills.forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    const cat = pill.getAttribute('data-cat');
+    menuCards.forEach(card => {
+      const show = cat === 'all' || card.getAttribute('data-cat') === cat;
+      card.style.display = show ? '' : 'none';
+      card.style.transition = 'opacity 0.35s, transform 0.35s';
+      if (show) { card.style.opacity='1'; card.style.transform=''; }
+    });
+  });
+});
+
+/* --- MENU EXPAND --- */
+document.querySelectorAll('.menu-card-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const card = btn.closest('.menu-card');
+    card.classList.toggle('expanded');
+  });
+});
+
+/* --- SCROLL REVEAL --- */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold:0.10, rootMargin:'0px 0px -40px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+/* --- PARALLAX HERO --- */
+window.addEventListener('scroll', () => {
+  const hero = document.getElementById('hero');
+  const bg = hero.querySelector('.hero-bg');
+  if (window.scrollY < hero.offsetHeight) {
+    bg.style.transform = `scale(1) translateY(${window.scrollY * 0.28}px)`;
+  }
+}, { passive:true });
+</script>
+</body>
+</html>
